@@ -71,7 +71,29 @@ void first_pass() {
   //they must be extern variables
   extern int num_frames;
   extern char name[128];
-
+  num_frames = -1;
+  name[0] = 0;
+  int i;
+  for (i = 0; i < lastop; i++) {
+    if (op[i].opcode == FRAMES) {
+      num_frames = op[i].op.frames.num_frames;
+    }
+    if (op[i].opcode == BASENAME) {
+      name = op[i].op.basename.p;
+    }
+  }
+  if (name[0] == 0 && num_frames > 1) {
+    name = "animation";
+    printf("The basename is %s\n", name);
+  }
+  for (i = 0; i < lastop; i++) {
+    if (op[i].opcode == VARY) {
+      if (num_frames < 1) {
+        printf("Num frames not set also anime isn't real\n");
+        exit(1);
+      }
+    }
+  }
 }
 
 /*======== struct vary_node ** second_pass() ==========
@@ -94,6 +116,15 @@ void first_pass() {
   appropirate value.
   ====================*/
 struct vary_node ** second_pass() {
+  int i, j;
+  for (i = 0; i < lastop; i++) {
+    if (op[i].opcode == VARY) {
+      for (j = 0; j < frames; j++) {
+        knob[j]
+      }
+    }
+
+  }
   return NULL;
 }
 
